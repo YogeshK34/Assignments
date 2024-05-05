@@ -2,14 +2,14 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 
-// creating an instance of express
 const app = express();
 
-//to read the contents of the file directory
+// Serve static files in the 'files' directory
+app.use('/files', express.static(path.join(__dirname, 'files')));
+
+// Read the contents of the file directory
 app.get("/files", function (req, res) {
-    // join the path segment into a single path
     const directoryPath = path.join(__dirname, 'files');
-    //to read the directory
     fs.readdir(directoryPath, function (err, files) {
         if (err) {
             console.error('Error reading directory:', err);
@@ -18,29 +18,44 @@ app.get("/files", function (req, res) {
         }
         res.status(200).json(files);
     });
-})
+});
 
-
-// to create a GET request to read the contents of a given file
-
+// Serve individual files including images
 app.get('/files/:filename', (req, res) => {
     const fileName = req.params.filename;
     const filePath = path.join(__dirname, 'files', fileName);
-    fs.readFile(filePath, 'utf8', function(err, data) {
+    fs.readFile(filePath, (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
             res.status(404).send('File not found');
             return;
         }
+        // Set the correct content type based on the file extension
+        const contentType = getContentType(fileName);
+        res.set('Content-Type', contentType);
         res.status(200).send(data);
     });
 });
+
+function getContentType(fileName) {
+    const ext = path.extname(fileName);
+    switch (ext) {
+        case '.png':
+            return 'image/png';
+        case '.jpg':
+        case '.jpeg':
+            return 'image/jpeg';
+        case '.gif':
+            return 'image/gif';
+        default:
+            return 'application/octet-stream';
+    }
+}
 
 app.use((req, res) => {
     res.status(404).send('Not Found');
 });
 
-// create a app.listen to run the above code on a port
-app.listen(3000, function () {
+app.listen(3000, () => {
     console.log("Server is running on port 3000");
-})  
+});
