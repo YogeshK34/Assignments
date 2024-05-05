@@ -8,7 +8,6 @@ const users = [{
 }];
 
 const app = express();
-
 app.use(express.json());
 
 app.get('/', function (req, res) {
