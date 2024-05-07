@@ -1,18 +1,19 @@
-const express = require('express');
-const zod = require('zod');
-const app = express();
+// give me a simple zod function for better understanding
+const zod = require("zod");
 
-const schema = zod.array(zod.number());
+function userValidation(obj) {
+    const createUserSchema = zod.object({
+        name: zod.string(),
+        email: zod.string().email(),
+        password: zod.string().min(6),
+    });
 
-app.use(express.json());
-
-app.post("/health-checkup",function(req,res){
-    const kidneys = req.body.kidneys;
-    const response = schema.safeParse(kidneys)
-    res.send({
-        response
-    })
+    const response = createUserSchema.safeParse(obj);
+    console.log(response);
+}
+userValidation({
+    name: "John",
+    email: "john.c.calhoun@examplepetstore.com",
+    password: "349284848"
 });
-
-app.listen(3000);
 
