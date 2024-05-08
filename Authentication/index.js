@@ -7,19 +7,19 @@ app.use(express.json());
 
 const ALL_USERS = [
     {
-        username: "harkirat@gmail.com",
+        username: "walter@gmail.com",
         password: "123",
-        name: "harkirat singh",
+        name: "Walter White",
     },
     {
-        username: "raman@gmail.com",
-        password: "123321",
-        name: "Raman singh",
+        username: "jesse@gmail.com",
+        password: "456",
+        name: "Jesse Pinkman",
     },
     {
-        username: "priya@gmail.com",
-        password: "123321",
-        name: "Priya kumari",
+        username: "saul@gmail.com",
+        password: "789",
+        name: "Saul Goodman",
     },
 ];
 
