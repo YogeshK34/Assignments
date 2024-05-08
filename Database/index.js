@@ -11,6 +11,8 @@ const User = mongoose.model('Users', {
     password: String
 });
 
+
+// to add a new user database
 app.post("/signup", async function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
@@ -34,6 +36,54 @@ app.post("/signup", async function (req, res) {
         "message": "User created successfully"
     });
 });
+
+
+// to read the user database 
+app.get("/users", async function (req, res) {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+// to update a user
+app.put("/users/:username", async function (req, res) {
+    const username = req.params.username;
+    const updatedFields = req.body;
+
+    try {
+        const user = await User.findOneAndUpdate({ email: username }, updatedFields, { new: true });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+
+//to delete a user
+app.delete("/users/:username", async function (req, res) {
+    const username = req.params.username;
+
+    try {
+        const user = await User.findOneAndDelete({ email: username });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json({ message: "User deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+
 
 
 app.listen(3001, () => {
