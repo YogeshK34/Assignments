@@ -1,0 +1,19 @@
+<html>
+<script>
+    function sum() {
+        //alert("Oi");
+        const a = document.getElementById("firstNumber").value;
+        const b = document.getElementById("secondNumber").value;
+        const element = document.getElementById("finalSum")
+        element.innerHTML = parseInt(a) + parseInt(b) ;
+        //console.log(element)
+    }
+</script>
+<body>
+    <input id = "firstNumber" type= "text" placeholder="First-Number"></input><br><br>
+    <input id = "secondNumber" type= "text"  placeholder="Second-Number"></input><br><br>
+    <button onclick="sum()">Calculate Sum</button><br><br>
+    <div id="finalSum"></div>
+</body>
+
+</html>
