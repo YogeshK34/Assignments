@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Debounced Sum Calculation</title>
+</head>
+
+<body>
+    <input oninput="debouncedPopulateDiv()" id="fno" type="text" placeholder="First-Number"><br><br>
+    <input oninput="debouncedPopulateDiv()" id="sno" type="text" placeholder="Second-Number"><br><br>
+    <div id="finalSum"></div>
+
+    <script>
+        let debounceTimeout;
+
+        function debouncedPopulateDiv() {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(populateDiv, 100);
+        }
+
+        async function populateDiv() {
+            const a = document.getElementById("fno").value;
+            const b = document.getElementById("sno").value;
+
+            try {
+                const response = await fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const ans = await response.text();
+                document.getElementById("finalSum").innerHTML = ans;
+            } catch (error) {
+                document.getElementById("finalSum").innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<html>
+<script>
+    async function calculateInterest() {
+        const principal = document.getElementById("principal").value;
+        const noofYears = document.getElementById("noOfYears").value;
+        const rateOfInterest = document.getElementById("rateOfInterest").value;
+
+        const response = await fetch("https://sum-server.100xdevs.com/interest?principal=" + principal +
+            "&rate=" + rateOfInterest + "&time=" + noofYears);
+        const data = await response.json();
+
+        const total = data.total || 0; // default to 0 if total is not present in the response
+        const interest = data.interest || 0; // default to 0 if interest is not present in the response
+
+        document.getElementById("abc").innerHTML = `Total: ${total}, Interest: ${interest}`;
+    }
+
+</script>
+
+
+<body>
+    <input id="principal" type="text" placeholder="Enter Principal Amount"></input><br><br>
+    <input id="noOfYears" type="text" placeholder="Enter Number of Years"></input><br><br>
+    <input id="rateOfInterest" type="text" placeholder="Enter Rate of interest"></input><br><br>
+    <button onclick="calculateInterest()">Calculate Interest</button>
+    <div id="abc"></div>
+</body>
+
+</html>
