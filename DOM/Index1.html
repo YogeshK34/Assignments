@@ -1,0 +1,32 @@
+<html>
+
+<body>
+    <form id="LoginForm" action="/action_page.php">
+        First name: <input type="text" name="fname" value="Walter"><br>
+        Last name: <input type="text" name="lname" value="white"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <p> Click the "TryIt" button to display the number of elements in the form</p>
+    <button onclick="myFunction()">TryIt</button>
+    <p id="displaySpace"></p>
+    <script>
+        function myFunction() {
+            var x = document.getElementsByTagNameNS("LoginForm").elements.length;
+            var y = document.getElementById("LoginForm").elements[1].value;
+            document.getElementById("displaySpace").innerHTML = "Found " + x +
+                " elements in the form. The last name is " + y;
+
+
+             // the createElement() method & appendChild method()
+            const para = document.createElement("p");
+            para.innerText = "This shows the use of createElement & appendChild()";
+            document.body.appendChild(para);
+
+
+            // finding HTML elements
+        }
+    </script>
+</body>
+
+</html>
